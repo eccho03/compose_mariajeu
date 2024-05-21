@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -116,12 +118,31 @@ class MypageFragment : Fragment() {
 
     @Composable
     fun MyPageFragmentScreen() {
-        Row(Modifier.fillMaxSize(),
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
-            )
-        {
+        ) {
             MyPageFragmentLogo()
             MyPageFragmentLogin()
+        }
+
+        MypageFragmentText()
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+        ) {
+            Spacer(modifier = Modifier.height(213.dp))
+
+            Text(
+                text = "나의 예약",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
         }
     }
 
@@ -158,6 +179,35 @@ class MypageFragment : Fragment() {
             }
 
             Spacer(modifier = Modifier.height(8.dp))
+        }
+    }
+
+    @Composable
+    fun MypageFragmentText(){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Spacer(modifier = Modifier.height(93.dp))
+
+            Text(
+                text = "My Page",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
+            )
+
+            Text(
+                text = "'당신을 위한 와인 안주 추천 서비스'",
+                fontSize = 14.sp,
+                color = Color.Black,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
         }
     }
 
