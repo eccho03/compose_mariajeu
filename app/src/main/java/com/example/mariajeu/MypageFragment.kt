@@ -134,6 +134,7 @@ class MypageFragment : Fragment() {
             modifier = Modifier
                 .fillMaxSize(),
         ) {
+
             Spacer(modifier = Modifier.height(213.dp))
 
             Text(
@@ -141,9 +142,10 @@ class MypageFragment : Fragment() {
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 10.dp)
+                modifier = Modifier.padding(bottom = 10.dp, start = 40.dp)
             )
         }
+
     }
 
     @Composable
