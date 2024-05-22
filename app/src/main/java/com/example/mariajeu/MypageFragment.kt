@@ -1,16 +1,15 @@
 package com.example.mariajeu
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,11 +17,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +33,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +43,6 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.mariajeu.databinding.FragmentMypageBinding
-import kotlin.math.log
 
 class MypageFragment : Fragment() {
 
@@ -79,16 +82,25 @@ class MypageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 //        binding = FragmentMypageBinding.inflate(inflater, container, false)
-        var myRestaurantList = RestaurantAdapter.myPageRestaurantList
+//        var myRestaurantList = RestaurantAdapter.myPageRestaurantList
+//
+//        fun setValues() {
+//            val adapter = MyPageAdapter(requireContext(), myRestaurantList)
+//            binding.lvMypage.adapter = adapter
+//        }
+//
+//        setValues()
+//
+//        return binding.root
 
-        fun setValues() {
-            val adapter = MyPageAdapter(requireContext(), myRestaurantList)
-            binding.lvMypage.adapter = adapter
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                MaterialTheme {
+                    MyPageFragmentScreen()
+                }
+            }
         }
-
-        setValues()
-
-        return binding.root
 
     }
 
@@ -119,6 +131,8 @@ class MypageFragment : Fragment() {
     @Composable
     fun MyPageFragmentScreen() {
 
+        var myRestaurantList = RestaurantAdapter.myPageRestaurantList
+
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -128,7 +142,7 @@ class MypageFragment : Fragment() {
             MyPageFragmentLogin()
         }
 
-        MypageFragmentText()
+        MypageFragmentTitleText()
 
         Column(
             modifier = Modifier
@@ -136,14 +150,10 @@ class MypageFragment : Fragment() {
         ) {
 
             Spacer(modifier = Modifier.height(213.dp))
+            MypageFragmentReservationText()
 
-            Text(
-                text = "나의 예약",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 10.dp, start = 40.dp)
-            )
+            MyPageFragmentListView(myRestaurantList)
+
         }
 
     }
@@ -185,7 +195,7 @@ class MypageFragment : Fragment() {
     }
 
     @Composable
-    fun MypageFragmentText(){
+    fun MypageFragmentTitleText(){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -211,6 +221,65 @@ class MypageFragment : Fragment() {
                 modifier = Modifier.padding(bottom = 10.dp)
             )
         }
+    }
+
+    @Composable
+    fun MypageFragmentReservationText() {
+        Text(
+            text = "나의 예약",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 10.dp, start = 40.dp)
+        )
+    }
+
+    @Composable
+    fun MyPageFragmentListView(myPageLists: ArrayList<ReservedRestaurant>) {
+        LazyColumn(
+            modifier = Modifier
+                .padding(vertical = 20.dp)
+                .size(width = 330.dp, height = 460.dp)
+        ) {
+            items(myPageLists) { myPageList ->
+                ReservationItem(myPageList)
+            }
+        }
+    }
+
+    @Composable
+    fun ReservationItem(reservation: ReservedRestaurant) {
+        Column {
+            // 콜키지 비용 무료 버튼
+
+            Row {
+                Box(
+                    Modifier
+                        .width(80.dp)
+                        .height(90.dp)
+                        .background(Color.Gray)
+                )
+                Column {
+                    Text(reservation.restaurantName)
+
+                    when (reservation.reservedTime) {
+                        1 -> Text(text = " - 오후 6:00 - ")
+                        2 -> Text(text = " - 오후 6:30 - ")
+                        3 -> Text(text = " - 오후 7:00 - ")
+                        4 -> Text(text = " - 오후 7:30 - ")
+                        5 -> Text(text = " - 오후 8:00 - ")
+                    }
+
+                    // 취소 버튼
+//                    Button()
+                    // 당일 취소 안 된다는 문구
+                }
+
+            }
+
+        }
+
+
     }
 
 }
