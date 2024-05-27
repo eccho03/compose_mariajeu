@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -33,9 +34,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -237,49 +242,87 @@ class MypageFragment : Fragment() {
     @Composable
     fun MyPageFragmentListView(myPageLists: ArrayList<ReservedRestaurant>) {
         LazyColumn(
-            modifier = Modifier
-                .padding(vertical = 20.dp)
-                .size(width = 330.dp, height = 460.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
             items(myPageLists) { myPageList ->
-                ReservationItem(myPageList)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    ReservationItem(myPageList)
+                }
             }
         }
     }
 
     @Composable
     fun ReservationItem(reservation: ReservedRestaurant) {
-        Column {
-            // 콜키지 비용 무료 버튼
+        Column(
+            modifier = Modifier
+                        .padding(start = 5.dp)
+        ) {
 
             Row {
+
                 Box(
                     Modifier
                         .width(80.dp)
                         .height(90.dp)
                         .background(Color.Gray)
+                        .padding(start = 10.dp)
                 )
-                Column {
-                    Text(reservation.restaurantName)
 
-                    when (reservation.reservedTime) {
-                        1 -> Text(text = " - 오후 6:00 - ")
-                        2 -> Text(text = " - 오후 6:30 - ")
-                        3 -> Text(text = " - 오후 7:00 - ")
-                        4 -> Text(text = " - 오후 7:30 - ")
-                        5 -> Text(text = " - 오후 8:00 - ")
+                Spacer(modifier = Modifier.width(15.dp))
+
+                Column {
+                    Text(
+                        text = reservation.restaurantName,
+                        color = Color.Black,
+                        fontSize = 20.61.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    Row {
+                        // 예약 날짜
+                        Text(FilterdateFragment.date)
+
+                        // 예약 시간
+                        when (reservation.reservedTime) {
+                            1 -> Text(text = " - 오후 6:00 - ")
+                            2 -> Text(text = " - 오후 6:30 - ")
+                            3 -> Text(text = " - 오후 7:00 - ")
+                            4 -> Text(text = " - 오후 7:30 - ")
+                            5 -> Text(text = " - 오후 8:00 - ")
+                        }
+
+                        // 예약 인원
+                        Text(FilterdateFragment.personnel)
                     }
 
                     // 취소 버튼
-//                    Button()
+                    Button(
+                        onClick = { /* Do something */ },
+                        modifier = Modifier
+                            .size(80.dp, 30.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.LightGray
+                        )
+                    ) {
+                        Text(text = "취소하기", fontSize = 7.sp)
+                    }
                     // 당일 취소 안 된다는 문구
+                    Text(
+                        text = "당일취소 및 노쇼 방지를 위해 신중히 결정해주세요!",
+                        fontSize = 8.sp,
+                        color = Color(0XFFDA0505)
+                    )
                 }
 
             }
 
         }
-
-
     }
 
 }
