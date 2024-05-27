@@ -19,7 +19,7 @@ class FilterdateFragment : Fragment() {
     lateinit var binding: FragmentFilterdateBinding
 
     companion object {
-        var date: String = "일자"
+        var date: String = "일자와 인원을 선택해주세요"
         var personnel: String = "인원"
     }
 
@@ -39,7 +39,7 @@ class FilterdateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupDateChangeListener()
         setupPersonnelClickListeners()
-        setupTimeFilterClickListeners()
+//        setupTimeFilterClickListeners()
 
         binding.filterDateConfirmV.setOnClickListener {
             navigateToNextRegionFragment()
@@ -147,46 +147,46 @@ class FilterdateFragment : Fragment() {
         }
     }
 
-    private fun setupTimeFilterClickListeners() {
-        val timeFilterViews = arrayOf(
-            binding.filterDateSec2Time01V,
-            binding.filterDateSec2Time02V,
-            binding.filterDateSec2Time03V,
-            binding.filterDateSec2Time04V,
-            binding.filterDateSec2Time05V,
-            binding.filterDateSec2Time06V
-        )
+//    private fun setupTimeFilterClickListeners() {
+//        val timeFilterViews = arrayOf(
+//            binding.filterDateSec2Time01V,
+//            binding.filterDateSec2Time02V,
+//            binding.filterDateSec2Time03V,
+//            binding.filterDateSec2Time04V,
+//            binding.filterDateSec2Time05V,
+//            binding.filterDateSec2Time06V
+//        )
+//
+//        val timeFilterTextViews = arrayOf(
+//            binding.filterDateSec2Time01Tv,
+//            binding.filterDateSec2Time02Tv,
+//            binding.filterDateSec2Time03Tv,
+//            binding.filterDateSec2Time04Tv,
+//            binding.filterDateSec2Time05Tv,
+//            binding.filterDateSec2Time06Tv
+//        )
+//
+//        for (i in timeFilterViews.indices) {
+//            timeFilterViews[i]?.setOnClickListener {
+//                updateTimeFilterView(i, timeFilterViews, timeFilterTextViews)
+//            }
+//        }
+//    }
 
-        val timeFilterTextViews = arrayOf(
-            binding.filterDateSec2Time01Tv,
-            binding.filterDateSec2Time02Tv,
-            binding.filterDateSec2Time03Tv,
-            binding.filterDateSec2Time04Tv,
-            binding.filterDateSec2Time05Tv,
-            binding.filterDateSec2Time06Tv
-        )
-
-        for (i in timeFilterViews.indices) {
-            timeFilterViews[i]?.setOnClickListener {
-                updateTimeFilterView(i, timeFilterViews, timeFilterTextViews)
-            }
-        }
-    }
-
-    private fun updateTimeFilterView(selectedIndex: Int, timeFilterViews: Array<View>, timeFilterTextViews: Array<TextView>) {
-        resetTimeFilterViews(timeFilterViews, timeFilterTextViews)
-        timeFilterViews[selectedIndex]?.background =
-            requireContext().getDrawable(R.drawable.filter_date_rectangle_9)
-        timeFilterTextViews[selectedIndex]?.setTextColor(requireContext().getColor(R.color.white))
-    }
-
-    private fun resetTimeFilterViews(timeFilterViews: Array<View>, timeFilterTextViews: Array<TextView>) {
-        for (i in timeFilterViews.indices) {
-            timeFilterViews[i]?.background =
-                requireContext().getDrawable(R.drawable.filter_date_rectangle_8)
-            timeFilterTextViews[i]?.setTextColor(requireContext().getColor(R.color.black))
-        }
-    }
+//    private fun updateTimeFilterView(selectedIndex: Int, timeFilterViews: Array<View>, timeFilterTextViews: Array<TextView>) {
+//        resetTimeFilterViews(timeFilterViews, timeFilterTextViews)
+//        timeFilterViews[selectedIndex]?.background =
+//            requireContext().getDrawable(R.drawable.filter_date_rectangle_9)
+//        timeFilterTextViews[selectedIndex]?.setTextColor(requireContext().getColor(R.color.white))
+//    }
+//
+//    private fun resetTimeFilterViews(timeFilterViews: Array<View>, timeFilterTextViews: Array<TextView>) {
+//        for (i in timeFilterViews.indices) {
+//            timeFilterViews[i]?.background =
+//                requireContext().getDrawable(R.drawable.filter_date_rectangle_8)
+//            timeFilterTextViews[i]?.setTextColor(requireContext().getColor(R.color.black))
+//        }
+//    }
 
 
 }
